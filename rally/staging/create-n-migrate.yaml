@@ -1,0 +1,23 @@
+NovaServers.boot_server_from_volume_and_live_migrate:
+  - 
+    args:
+      image:
+        name: "windows10_pro_64bit_r01"
+      flavor:
+        name: "tiny_spec"
+      volume_size: 50
+      volume_type: "nfs1"
+      block_migration: false
+      auto_assign_nic: true
+    runner:
+      type: "constant"
+      times: 50
+      concurrency: 50
+    context:
+      network:
+        start_cidr: "10.5.0.0/16"
+        networks_per_tenant: 1
+        subnets_per_network: 1
+    sla:
+      failure_rate:
+        max: 0

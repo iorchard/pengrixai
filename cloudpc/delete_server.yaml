@@ -1,0 +1,12 @@
+defaults:
+  verbose: True
+  request_headers:
+      content-type: application/json
+      Platform_Tenant_Id: 04fc98f991574532bc9f6e241d3111a3
+
+tests:
+- name: delete a server
+  DELETE: http://192.168.151.231:32102/cm/v2/vms/cce6d7f5-129e-4da4-af6d-95d2b983c7d4
+  status: 200
+  response_json_paths:
+      $.retCode: "204"

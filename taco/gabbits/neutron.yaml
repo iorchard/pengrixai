@@ -1,0 +1,69 @@
+defaults:
+    verbose: True
+    request_headers:
+        x-auth-token: $ENVIRON['SERVICE_TOKEN']
+
+tests:
+- name: connect to neutron api
+  GET: $ENVIRON['NEUTRON_SERVICE']/
+  redirects: True
+  status: 200
+  response_json_paths:
+      $.versions[*].links[?rel = "self"].href: /$ENVIRON['NEUTRON_SERVICE']/
+      $.versions[*].status: CURRENT
+
+- name: create port
+  POST: $ENVIRON['NEUTRON_SERVICE']/v2.0/ports
+  request_headers:
+      content-type: application/json
+  data:
+      port:
+          network_id: $ENVIRON['NETWORK_REF']
+          name: $ENVIRON['PORT_NAME']
+  status: 201
+  response_store_value:
+      $.port.id: port_id
+
+- name: check port is created
+  GET: $ENVIRON['NEUTRON_SERVICE']/v2.0/ports/$ENVIRON['PORT_ID']
+  status: 200
+
+- name: check port is active
+  GET: $ENVIRON['NEUTRON_SERVICE']/v2.0/ports/$ENVIRON['PORT_ID']
+  status: 200
+  response_json_paths:
+      $.port.status: ACTIVE
+
+- name: delete port
+  DELETE: $ENVIRON['NEUTRON_SERVICE']/v2.0/ports/$ENVIRON['PORT_ID']
+  status: 204
+
+- name: check port is not found
+  GET: $ENVIRON['NEUTRON_SERVICE']/v2.0/ports/$ENVIRON['PORT_ID']
+  status: 404
+
+# Do not touch below!
+- name: create floating ip
+  POST: /v2.0/floatingips
+  request_headers:
+      content-type: application/json
+  data:
+      floatingip:
+          floating_network_id: $ENVIRON['EXTERNAL_NET_ID']
+          port_id: $ENVIRON['PORT_ID']
+  status: 201
+  response_store_value:
+      $.floatingip.floating_ip_address: address
+      $.floatingip.id: id
+
+- name: delete floating ip
+  DELETE: /v2.0/floatingips/$ENVIRON['FLOATING_IP_ID']
+  status: 204
+
+- name: list active ports
+  GET: /v2.0/ports?device_id=$ENVIRON['SERVER_ID']&status=ACTIVE
+  request_headers:
+      content-type: application/json
+  status: 200
+  response_store_value:
+      $.ports[0].id: port_id

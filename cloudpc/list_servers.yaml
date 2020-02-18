@@ -1,0 +1,11 @@
+defaults:
+    verbose: true
+
+tests:
+- name: get vm list
+  method: GET
+  url: http://192.168.151.231:32102/cm/v2/vms
+  request_headers:
+      Content-Type: application/json
+      Platform_Tenant_Id: 04fc98f991574532bc9f6e241d3111a3
+  status: 200

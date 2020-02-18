@@ -1,0 +1,21 @@
+NovaServers.boot_server_from_volume:
+  - 
+    args:
+      image:
+        name: "windows10_pro_64bit_r01"
+      flavor:
+        name: "tiny_spec"
+      volume_size: 50
+      volume_type: "rbd1"
+      auto_assign_nic: true
+    runner:
+      type: "constant"
+      times: 1
+      concurrency: 1
+    context:
+      network:
+        start_cidr: "10.5.0.0/16"
+        networks_per_tenant: 1
+    sla:
+      failure_rate:
+        max: 0

@@ -1,0 +1,74 @@
+defaults:
+  verbose: True
+  request_headers:
+    content-type: application/json
+    platform_tenant_id: $ENVIRON['PROJECT_ID']
+
+tests:
+- name: get vm list
+  GET:  /cm/v2/vms
+  status: 200
+
+- name: create server
+  POST: /cm/v2/vms
+  data:
+      name: $ENVIRON['SERVER_NAME']
+      imageRef: $ENVIRON['IMAGE_REF']
+      allowSharedFolder: true
+      flavorRef: $ENVIRON['FLAVOR_REF']
+      allowSound: true
+      usbRedirCnt: 1
+      availabilityZone: $ENVIRON['ZONE']:$ENVIRON['HOST']
+      networks:
+        - networkId: $ENVIRON['NETWORK_REF']
+      volumeTypeId: $ENVIRON['VOL_TYPE']
+  status: 200
+  response_json_paths:
+      $.retCode: "201"
+
+- name: verify number of servers
+  GET: /cm/v2/vms
+  status: 200
+  response_json_paths:
+      $.retObj.servers.`len`: $ENVIRON['NUM_SERVERS']
+
+- name: collect server id
+  GET:  /cm/v2/vms
+  status: 200
+  response_store_value:
+      $.retObj.servers[/name][*].id: server_id_list
+
+- name: verify server name
+  GET: /cm/v2/vms/$ENVIRON['SERVER_ID']
+  response_json_paths:
+      $.retObj.server.name: $ENVIRON['SERVER_NAME']
+
+- name: check server status is active
+  GET: /cm/v2/vms/$ENVIRON['SERVER_ID']
+  response_json_paths:
+      $.retObj.server.status: active
+
+- name: stop server
+  POST: /cm/v2/vms/$ENVIRON['SERVER_ID']/stop
+  status: 200
+
+- name: check server status is shutoff
+  GET: /cm/v2/vms/$ENVIRON['SERVER_ID']
+  response_json_paths:
+      $.retObj.server.status: shutoff
+
+- name: start server
+  POST: /cm/v2/vms/$ENVIRON['SERVER_ID']/start
+  status: 200
+
+- name: delete server
+  DELETE: /cm/v2/vms/$ENVIRON['SERVER_ID']
+  status: 200
+  response_json_paths:
+      $.retCode: "204"
+
+- name: check server is not found
+  GET: /cm/v2/vms/$ENVIRON['SERVER_ID']
+  status: 200
+  response_json_paths:
+      $.retCode: "404"

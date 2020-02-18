@@ -1,0 +1,12 @@
+defaults:
+  verbose: True
+  request_headers:
+    content-type: application/json
+    platform_tenant_id: 04fc98f991574532bc9f6e241d3111a3
+
+tests:
+- name: stop the server
+  POST: http://192.168.151.231:32102/cm/v2/vms/cce6d7f5-129e-4da4-af6d-95d2b983c7d4/stop
+  status: 200
+  response_json_paths:
+      $.retCode: "201"

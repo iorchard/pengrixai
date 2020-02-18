@@ -1,0 +1,12 @@
+defaults:
+  verbose: True
+  request_headers:
+      content-type: application/json
+      Platform_Tenant_Id: 04fc98f991574532bc9f6e241d3111a3
+
+tests:
+- name: get non-existent vm info
+  method: GET
+  xfail: True
+  url: http://192.168.151.231:32102/cm/v2/vms/not-existing-vm
+  status: 200

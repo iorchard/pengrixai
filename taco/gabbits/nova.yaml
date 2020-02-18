@@ -1,0 +1,115 @@
+defaults:
+    verbose: True
+    request_headers:
+        x-auth-token: $ENVIRON['SERVICE_TOKEN']
+
+tests:
+- name: get compute api versions
+  GET: /
+  response_json_paths:
+      $.version.links[?rel = "self"].href: /$ENVIRON['COMPUTE_SERVICE']/
+      $.version.status: CURRENT
+
+- name: create server
+  POST: /servers
+  request_headers:
+      content-type: application/json
+  data:
+      server:
+          name: $ENVIRON['SERVER_NAME']
+          imageRef: $ENVIRON['IMAGE_REF']
+          flavorRef: $ENVIRON['FLAVOR_REF']
+          networks:
+            - uuid: $ENVIRON['NETWORK_REF']
+          availability_zone: $ENVIRON['ZONE']:$ENVIRON['HOST']
+  status: 202
+  response_headers:
+      location: //servers/[a-f0-9-]+/
+  response_store_value:
+      $.server.id: server_id
+
+- name: create server with port and volume
+  POST: /servers
+  request_headers:
+      content-type: application/json
+  data:
+      server:
+          name: $ENVIRON['SERVER_NAME']
+          flavorRef: $ENVIRON['FLAVOR_REF']
+          networks:
+            - uuid: $ENVIRON['NETWORK_REF']
+              port: $ENVIRON['PORT_REF']
+          block_device_mapping_v2:
+            - boot_index: 0
+              uuid: $ENVIRON['VOLUME_REF']
+              source_type: volume
+              destination_type: volume
+              delete_on_termination: True
+          availability_zone: $ENVIRON['ZONE']:$ENVIRON['HOST']
+  status: 202
+  response_headers:
+      location: //servers/[a-f0-9-]+/
+  response_store_value:
+      $.server.id: server_id
+
+- name: verify server name
+  GET: /servers/$ENVIRON['SERVER_ID']
+  response_json_paths:
+      $.server.name: $ENVIRON['SERVER_NAME']
+
+- name: check server status is active
+  GET: /servers/$ENVIRON['SERVER_ID']
+  response_json_paths:
+      $.server.status: ACTIVE
+
+- name: verify all servers are active
+  GET: /servers?status=ACTIVE&name=$ENVIRON['SERVER_NAME']
+  response_json_paths:
+      $.servers.`len`: $ENVIRON['NUM_SERVERS']
+
+- name: stop server
+  POST: /servers/$ENVIRON['SERVER_ID']/action
+  request_headers:
+      content-type: application/json
+  data:
+      os-stop: null
+  status: 202
+
+- name: check server status is shutoff
+  GET: /servers/$ENVIRON['SERVER_ID']
+  response_json_paths:
+      $.server.status: SHUTOFF
+
+- name: verify all servers are shutoff
+  GET: /servers?status=SHUTOFF&name=$ENVIRON['SERVER_NAME']
+  response_json_paths:
+      $.servers.`len`: $ENVIRON['NUM_SERVERS']
+
+- name: start server
+  POST: /servers/$ENVIRON['SERVER_ID']/action
+  request_headers:
+      content-type: application/json
+  data:
+      os-start: null
+  status: 202
+
+- name: delete server
+  DELETE: /servers/$ENVIRON['SERVER_ID']
+  status: 204
+
+- name: check server is not found
+  GET: /servers/$ENVIRON['SERVER_ID']
+  status: 404
+
+- name: verify all servers are gone
+  GET: /servers?name=$ENVIRON['SERVER_NAME']
+  response_json_paths:
+      $.servers.`len`: 0
+
+# Do not touch the below!
+
+- name: verify floating ip in server addresses
+  GET: /servers/$ENVIRON['SERVER_ID']
+  response_json_paths:
+      $.server.addresses.*[?"OS-EXT-IPS:type"="floating"].addr: $ENVIRON['FLOATING_IP']
+

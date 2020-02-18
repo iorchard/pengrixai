@@ -1,0 +1,46 @@
+
+defaults:
+    verbose: True
+    request_headers:
+        x-auth-token: $ENVIRON['SERVICE_TOKEN']
+
+tests:
+- name: connect to cinder api
+  GET: $ENVIRON['CINDER_SERVICE']
+  redirects: True
+  status: 200
+  response_json_paths:
+      $.versions[*].links[?rel = "self"].href: /$ENVIRON['CINDER_SERVICE']/
+      $.versions[*].status: CURRENT
+
+- name: create volume
+  POST: $ENVIRON['CINDER_SERVICE']/$ENVIRON['PROJECT_ID']/volumes
+  request_headers:
+      content-type: application/json
+  data:
+      volume:
+          name: $ENVIRON['VOL_NAME']
+          size: $ENVIRON['VOL_SIZE']
+          imageRef: $ENVIRON['IMAGE_REF']
+          volume_type: $ENVIRON['VOL_TYPE']
+  status: 202
+  response_store_value:
+      $.volume.id: volume_id
+
+- name: check volume is created
+  GET: $ENVIRON['CINDER_SERVICE']/$ENVIRON['PROJECT_ID']/volumes/$ENVIRON['VOLUME_ID']
+  status: 200
+
+- name: check volume is available
+  GET: $ENVIRON['CINDER_SERVICE']/$ENVIRON['PROJECT_ID']/volumes/$ENVIRON['VOLUME_ID']
+  status: 200
+  response_json_paths:
+      $.volume.status: available
+
+- name: delete volume
+  DELETE: $ENVIRON['CINDER_SERVICE']/$ENVIRON['PROJECT_ID']/volumes/$ENVIRON['VOLUME_ID']
+  status: 202
+
+- name: check volume is is not found
+  GET: $ENVIRON['CINDER_SERVICE']/$ENVIRON['PROJECT_ID']/volumes/$ENVIRON['VOLUME_ID']
+  status: 404

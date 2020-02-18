@@ -1,0 +1,24 @@
+defaults:
+    verbose: True
+
+tests:
+- name: create a server
+  POST: http://192.168.151.231:32102/cm/v2/vms
+  request_headers:
+      content-type: application/json
+      Platform_Tenant_Id: 04fc98f991574532bc9f6e241d3111a3
+  data:
+      name: test-server
+      imageRef: 0c324442-e612-4709-a3b0-82ca9e45c5d4
+      allowSharedFolder: true
+      flavorRef: db82b528-a86f-41a3-96d0-6a130aa787c0
+      allowSound: true
+      usbRedirCnt: 1
+      availabilityZone: nova
+      networks:
+        - networkId: bc86860c-1064-4b0e-9e4d-bdcb19f758fc
+      # volumeTypeId is optional (default storage class used if unspecified.)
+      volumeTypeId: 1ffb181a-7a40-468d-b3a0-81ec35b1a0ac
+  status: 200
+  response_json_paths:
+      $.retCode: "201"

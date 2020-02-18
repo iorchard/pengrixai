@@ -1,0 +1,25 @@
+tests:
+
+- name: get auth token
+  POST: /auth/tokens
+  status: 201
+  request_headers:
+      content-type: application/json
+  data:
+    auth:
+      identity:
+        methods:
+          - password
+        password:
+          user:
+            domain:
+              name: $ENVIRON['DOMAIN_NAME']
+            name: $ENVIRON['USER_NAME']
+            password: $ENVIRON['USER_PASSWORD']
+      scope:
+        project:
+          domain:
+              name: $ENVIRON['DOMAIN_NAME']
+          name: $ENVIRON['PROJECT_NAME']
+  response_headers_store_value:
+      X-Subject-Token: auth_token
