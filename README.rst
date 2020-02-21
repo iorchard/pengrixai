@@ -7,7 +7,21 @@ It's based on RobotFramework.
 Pre-requisite
 ---------------
 
-Create a python3 virtual environtment and 
+* dstat command
+
+All TACO machines should have dstat command. If it is not installed,
+install it first.
+
+* passwordless ssh login
+
+The test machine should be able to login via ssh to all TACO machines
+without password prompt.
+If it cannot, create a ssh key pair and copy the public key to all TACO 
+machines.
+
+* python3 virtual environment
+
+Create a python3 virtual environment and 
 install robotframework, gabbi, and robotframework-gabbilibrary.::
 
    $ sudo apt update && sudo apt install -y python3-venv
@@ -21,10 +35,40 @@ install robotframework, gabbi, and robotframework-gabbilibrary.::
    (pengrixai) $ python -m pip install \
       dist/robotframework_gabbilibrary-0.1.1-py3-none-any.whl
 
+Configure
+----------
+
+Go to taco/resources, copy openstack_settings.robot.sample and
+edit openstack_settings.robot.::
+
+   (pengrixai) $ cd taco/resources
+   (pengrixai) $ cp openstack_settings.robot.sample openstack_settings.robot
+   (pengrixai) $ vi openstack_settings.robot
+   ...
+   ${USER_PASSWORD}        <admin-password>
+   @{HOSTS}            <host1>   <host2>   <host3>
+
+${USER_PASSWORD} is a string variable for OpenStack admin password
+
+@{HOSTS} is an array variable for OpenStack compute hosts.
+
+Go to cloudpc/resources, copy cloudpc_settings.robot.sample and
+edit cloudpc_settings.robot.::
+
+   (pengrixai) $ cd cloudpc/resources
+   (pengrixai) $ cp cloudpc_settings.robot.sample cloudpc_settings.robot
+   (pengrixai) $ vi cloudpc_settings.robot
+   ...
+   @{HOSTS}            <host1>   <host2>   <host3>
+
+@{HOSTS} is an array variable for OpenStack compute hosts.
+
 Run robot
 -----------
 
-Go to taco directory and run the performace test robots.
+Go to taco robot directory.::
+
+   (pengrixai) $ cd taco/robot
 
 Create and Start <n> VMs.::
 
@@ -56,5 +100,16 @@ Delete <n> VMs.::
       delete_servers.robot
 
 Go to cloudpc directory and do the same performance tests.
+
+Output
+-------
+
+All robot output files are in output directory as you specify in robot command
+(-d option).
+
+All dstat log output files are in monitor/output directory.
+
+If you want to display dstat log output to web page, use dstat_graph
+(https://github.com/Dabz/dstat_graph.git).
 
 
