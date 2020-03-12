@@ -7,26 +7,27 @@ It's based on RobotFramework.
 Pre-requisite
 ---------------
 
-* dstat command
-
 All TACO machines should have dstat command. If it is not installed,
-install it first.
+install it first.::
 
-* passwordless ssh login
+   $ sudo yum install -y dstat
 
 The test machine should be able to login via ssh to all TACO machines
 without password prompt.
 If it cannot, create a ssh key pair and copy the public key to all TACO 
 machines.
 
-* python3 virtual environment
 
-Create a python3 virtual environment and 
+Kanif is used as a cluster management tool.::
+
+   $ sudo apt install kanif
+
+python3 virtual environment: Create a python3 virtual environment and 
 install robotframework, gabbi, and robotframework-gabbilibrary.::
 
    $ sudo apt update && sudo apt install -y python3-venv
    $ mkdir ~/.envs
-   $ python -m venv ~/.envs/pengrixai
+   $ python3 -m venv ~/.envs/pengrixai
    $ source ~/.envs/pengrixai/bin/activate
    (pengrixai) $ python -m pip install wheel
    (pengrixai) $ python -m pip install gabbi robotframework
