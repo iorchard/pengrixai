@@ -4,8 +4,9 @@ Clean dstat log
   ...   shell=True  cwd=../monitor
 
 Start kanif process
+  [Arguments]   ${conf}=kanif.conf
   ${handle} =   Start Process
-  ...   kash -f kanif.conf -l clex -- "dstat -tlcmdn -o dstat.log"  shell=True
+  ...   kash -f ${conf} -l clex -- "dstat -tlcmdn -o dstat.log"  shell=True
   ...   cwd=../monitor
 
   ${pid} =  Get Process Id    ${handle}

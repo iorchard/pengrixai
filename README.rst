@@ -64,6 +64,13 @@ edit cloudpc_settings.robot.::
 
 @{HOSTS} is an array variable for OpenStack compute hosts.
 
+Go to monitor/,  copy kanif.conf.sample to kanif.conf and edit it.::
+
+   (pengrixai) $ cd monitor
+   (pengrixai) $ cp kanif.conf.sample kanif.conf
+   (pengrixai) $ vi kanif.conf
+   
+
 Run robot
 -----------
 
