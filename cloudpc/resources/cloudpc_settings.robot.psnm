@@ -12,8 +12,8 @@ ${VOL_TYPE}			041c03eb-8ccf-4aeb-a2fe-05c5282bcaaa
 #### Settings for CloudPC test cases ####
 ${SERVER_NAME}      cloudpc-server
 
-# Project ID: perftest
-${PROJECT_ID}       1b72a9da2bf049e89f6dbf700587368c,
+# Project ID: 20200313162228963047
+${PROJECT_ID}       0c4e221fc7e24350880f88e2afa0eace
 
 # perftest 2C/4G/50G
 ${FLAVOR_REF}       e83ca418-01ef-4b94-bf72-1a0938f927f4

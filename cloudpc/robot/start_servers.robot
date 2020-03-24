@@ -22,8 +22,8 @@ Start Servers
 
 Post Process
   ${sleep} =    Convert To Integer  ${NUM_SERVERS}
-  Log       ${sleep * 3}s     console=True
-  Sleep     ${sleep * 3}s     Collecting resource usage
+  Log       ${sleep * 1}s     console=True
+  Sleep     ${sleep * 1}s     Collecting resource usage
   [Teardown]    Stop Monitor    ${handle}
 
 *** Keywords ***

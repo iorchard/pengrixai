@@ -3,16 +3,18 @@ Compute service is available
   get compute api versions  COMPUTE_SERVICE=${COMPUTE_SERVICE}
 
 User creates server
-  [Arguments]   ${network}=${PRIVATE_NETWORK}
   set suite variable    @{server_id}    @{EMPTY}
+  ${hostno} =    Get Length  ${HOSTS}
+  ${netno} =    Get Length  ${PRIVATE_NETWORKS}
   FOR   ${i}    IN RANGE    0   ${NUM_SERVERS}
-    ${a} =      Evaluate    ${i}%2
+    ${a} =      Evaluate    ${i}%${hostno}
+    ${b} =      Evaluate    ${i}%${netno}
     ${no} =     Evaluate    f'{${i}:03}'
     Log     Create ${SERVER_NAME}-${no}     console=True
     &{RESP}=  create server
-    ...                 SERVER_NAME=${SERVER_NAME}-${no}  IMAGE_REF=${IMAGE_REF}
-    ...                 FLAVOR_REF=${FLAVOR_REF}    NETWORK_REF=${network}
-    ...                 ZONE=${ZONE}    HOST=${HOSTS}[${a}]
+    ...     SERVER_NAME=${SERVER_NAME}-${no}  IMAGE_REF=${IMAGE_REF}
+    ...     FLAVOR_REF=${FLAVOR_REF}    NETWORK_REF=${PRIVATE_NETWORKS}[${b}]
+    ...     ZONE=${ZONE}    HOST=${HOSTS}[${a}]
     Append To List      ${server_id}    ${RESP.server_id}
   END
   ${rc} =   Run And Return Rc
@@ -20,16 +22,19 @@ User creates server
   Should Be Equal As Integers   ${rc}   0
 
 User creates server with port and volume
-  [Arguments]   ${network}=${PRIVATE_NETWORK}
   Set Suite Variable    @{server_id}    @{EMPTY}
   @{ports} =      Create List   @{EMPTY}
   Network service is available
   Volume service is available
+  ${hostno} =    Get Length  ${HOSTS}
+  ${netno} =    Get Length  ${PRIVATE_NETWORKS}
   FOR   ${i}    IN RANGE    0   ${NUM_SERVERS}
-    ${a} =      Evaluate    ${i}%2
+    ${a} =      Evaluate    ${i}%${hostno}
+    ${b} =      Evaluate    ${i}%${netno}
     ${no} =     Evaluate    f'{${i}:03}'
     Log     Create ${SERVER_NAME}-port-${no}    console=True
-    ${port} =     User creates port     ${network}  ${SERVER_NAME}-port-${no}
+    ${port} =     User creates port     ${PRIVATE_NETWORKS}[${b}]
+    ...                                 ${SERVER_NAME}-port-${no}
     Log     Create ${SERVER_NAME}-volume-${no}    console=True
     ${vol} =     User creates volume    ${SERVER_NAME}-vol-${no}
     Volume has been created
@@ -38,7 +43,7 @@ User creates server with port and volume
     &{RESP}=  create server with port and volume
     ...                 SERVER_NAME=${SERVER_NAME}-${no}
     ...                 FLAVOR_REF=${FLAVOR_REF}
-    ...                 NETWORK_REF=${network}
+    ...                 NETWORK_REF=${PRIVATE_NETWORKS}[${b}]
     ...                 PORT_REF=${port}
     ...                 VOLUME_REF=${vol}
     ...                 ZONE=${ZONE}

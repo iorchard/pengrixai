@@ -1,0 +1,28 @@
+*** Variables ***
+
+#### CloudPC General settings ####
+${API_SERVICE}      http://192.168.151.231:32102
+
+#### Settings for common test cases ####
+# windows10_pro_64bit_r01
+${IMAGE_REF}        0c324442-e612-4709-a3b0-82ca9e45c5d4
+# volume type: rbd1
+${VOL_TYPE}			1ffb181a-7a40-468d-b3a0-81ec35b1a0ac
+
+#### Settings for CloudPC test cases ####
+${SERVER_NAME}      cloudx-server
+
+# Project ID
+${PROJECT_ID}       04fc98f991574532bc9f6e241d3111a3
+
+# tiny_spec 2C/4G/50G
+${FLAVOR_REF}       db82b528-a86f-41a3-96d0-6a130aa787c0
+
+# public-net
+${PUBLIC_NETWORK}   ba3ca2e2-1445-42ad-be54-aceba67ebb81
+
+# jijisa-network. jijisa-subnet is 10.5.0.0/16
+@{PRIVATE_NETWORK}  bc86860c-1064-4b0e-9e4d-bdcb19f758fc
+
+${ZONE}             nova
+@{HOSTS}            stage-compute-02    stage-compute-03

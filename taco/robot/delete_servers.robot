@@ -28,8 +28,8 @@ Delete Servers
 Post Process
   Clean the ports
   ${sleep} =    Convert To Integer  ${NUM_SERVERS}
-  Log       ${sleep * 1}s     console=True
-  Sleep     ${sleep * 1}s     Collecting resource usage
+  Log       ${sleep}s     console=True
+  Sleep     ${sleep}s     Collecting resource usage
   [Teardown]    Stop Monitor    ${handle}
 
 *** Keywords ***

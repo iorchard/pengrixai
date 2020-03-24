@@ -1,0 +1,6 @@
+cluster stage {
+    pengrixai-0
+    stage-control-0[1-3]
+    stage-compute-0[2-3]
+    stage-ceph-0[1-4]
+}

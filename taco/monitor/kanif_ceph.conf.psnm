@@ -1,0 +1,4 @@
+cluster stage {
+    pengrixai-0
+    ceph-00[1-5]
+}

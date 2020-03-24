@@ -13,12 +13,12 @@ ${DOMAIN_NAME}          default
 ${PROJECT_NAME}         admin
 
 #### Settings for common test cases ####
-# windows10_pro_64bit_r01
-${IMAGE_REF}        0c324442-e612-4709-a3b0-82ca9e45c5d4
+# 200317_Win10Ent_1909_v2 (raw image)
+${IMAGE_REF}        4a959968-9b80-4633-adf9-22534cd9e8b1
 
 #### Settings for Cinder volume test cases ####
 # admin project id
-${PROJECT_ID}		04fc98f991574532bc9f6e241d3111a3
+${PROJECT_ID}		d1c4a25ff4bb4bd8afb8390fd6f6fedc
 # volume size in GiB
 ${VOL_SIZE}			50
 # volume type: rbd1 or nfs1
@@ -27,14 +27,20 @@ ${VOL_TYPE}			rbd1
 #### Settings for Nova test cases ####
 ${SERVER_NAME}      taco-server
 
-# tiny_spec 2C/4G/50G
-${FLAVOR_REF}       db82b528-a86f-41a3-96d0-6a130aa787c0
+# perftest 2C/4G/50G
+${FLAVOR_REF}       e83ca418-01ef-4b94-bf72-1a0938f927f4
 
 # public-net
 ${PUBLIC_NETWORK}   ba3ca2e2-1445-42ad-be54-aceba67ebb81
 
-# jijisa-network. jijisa-subnet is 10.5.0.0/16
-${PRIVATE_NETWORK}  bc86860c-1064-4b0e-9e4d-bdcb19f758fc
+# provider-{57,58,59}. 10.40.{57,58,59}.0/24
+@{PRIVATE_NETWORK}  92c64625-9894-43bc-80d6-cf2740989c51
+...                 5cad9198-d54c-43a8-ba55-d2d22f520653
+...                 1aa8f3b3-9eeb-42e3-bebf-7e9035df4eb1
 
 ${ZONE}             nova
-@{HOSTS}            <host1>   <host2>   <host3>
+@{HOSTS}            compute-001  compute-002  compute-003  compute-004
+...                 compute-005  compute-006  compute-007  compute-008
+...                 compute-009  compute-010  compute-011  compute-012
+...                 compute-013  compute-014  compute-015  compute-016
+...                 compute-017

@@ -23,14 +23,14 @@ Pre Process
 
 Create and Start Servers 
   Given Compute service is available
-  When User creates server with port and volume        ${PRIVATE_NETWORK}
+  When User creates server with port and volume
   #Then Server is active
   Then All servers are active
 
 Post Process
   ${sleep} =    Convert To Integer  ${NUM_SERVERS}
-  Log       ${sleep * 3}s     console=True
-  Sleep     ${sleep * 3}s     Collecting resource usage
+  Log       ${sleep}s     console=True
+  Sleep     ${sleep}s     Collecting resource usage
   [Teardown]    Stop Monitor    ${handle}
 
 *** Keywords ***

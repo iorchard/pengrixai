@@ -13,8 +13,6 @@ ${DATA_DIR}             ./data
 ${DATA_FILE}            server_id.txt
 ${PORT_FILE}            port_id.txt
 ${MON_OUTPUT_DIR}       ../monitor/output
-@{FIO_SERVERS}          perf-target     control-001
-${FIO_SERVER_PORT}      8764
 
 *** Keywords ***
 Preflight

@@ -9,18 +9,25 @@ Get server id file
   [Return]  ${output}
 
 User creates server
-  [Arguments]   ${network}=${PUBLIC_NETWORK}
+  ${hostno} =   Get Length  ${HOSTS}
+  ${netno} =    Get Length  ${PRIVATE_NETWORKS}
   FOR   ${i}    IN RANGE    0   ${NUM_SERVERS}
+    ${a} =      Evaluate    ${i}%${hostno}
+    ${b} =      Evaluate    ${i}%${netno}
     ${no} =     Evaluate    f'{${i}:03}'
     Log   Create ${SERVER_NAME}-${no}   console=True
     create server
-    ...                 SERVER_NAME=${SERVER_NAME}-${no}  IMAGE_REF=${IMAGE_REF}
-    ...                 FLAVOR_REF=${FLAVOR_REF}    NETWORK_REF=${network}
-    ...                 ZONE=${ZONE}    PROJECT_ID=${PROJECT_ID}
+    ...                 SERVER_NAME=${SERVER_NAME}-${no}
+    ...                 IMAGE_REF=${IMAGE_REF}
+    ...                 FLAVOR_REF=${FLAVOR_REF}
+    ...                 HOST=${HOSTS}[${a}]
+    ...                 NETWORK_REF=${PRIVATE_NETWORKS}[${b}]
+    ...                 ZONE=${ZONE}
+    ...                 PROJECT_ID=${PROJECT_ID}
     ...                 VOL_TYPE=${VOL_TYPE}
   END
   # Get server ids after there are ${NUM_SERVERS} servers
-  Wait Until Keyword Succeeds   1 hour  1s
+  Wait Until Keyword Succeeds   1 hour  5s
   ...   verify number of servers
   ...   PROJECT_ID=${PROJECT_ID}    NUM_SERVERS=${NUM_SERVERS}
   &{RESP} =     collect server id   PROJECT_ID=${PROJECT_ID}
@@ -92,7 +99,7 @@ Server is not found
   
   @{list} =     Split String     ${output}
   FOR   ${id}    IN     @{list}
-    Wait Until Keyword Succeeds   1 hour     500ms
+    Wait Until Keyword Succeeds   1 hour     1s
     ...                     check server is not found
     ...                         SERVER_ID=${id}
     ...                         PROJECT_ID=${PROJECT_ID}

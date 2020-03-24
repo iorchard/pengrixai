@@ -1,0 +1,6 @@
+cluster psnm {
+    control-001
+    control-00[1-3]
+    compute-0[06-16]
+    ceph-00[1-5]
+}

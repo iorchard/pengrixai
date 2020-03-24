@@ -4,7 +4,7 @@ Network service is available
   connect to neutron api    NEUTRON_SERVICE=${NEUTRON_SERVICE}
 
 User creates port
-  [Arguments]   ${network}=${PRIVATE_NETWORK}   ${name}=test-port
+  [Arguments]   ${network}   ${name}
   &{RESP} =     create port     PROJECT_ID=${PROJECT_ID}
   ...                           NETWORK_REF=${network}
   ...                           PORT_NAME=${name}

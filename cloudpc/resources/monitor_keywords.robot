@@ -1,11 +1,12 @@
 *** Keywords ***
 Clean dstat log
-  Run Process   kash -f kanif.conf -l clex -- "rm -f dstat.log"
+  Run Process   kash -f kanif.conf -l clex -F -- "rm -f dstat.log"
   ...   shell=True  cwd=../monitor
 
 Start kanif process
   ${handle} =   Start Process
-  ...   kash -f kanif.conf -l clex -- "dstat -tlcmdn -o dstat.log"  shell=True
+  ...   kash -f kanif.conf -l clex -F -- "dstat -tlcmdn -o dstat.log"
+  ...   shell=True
   ...   cwd=../monitor
 
   ${pid} =  Get Process Id    ${handle}
@@ -19,6 +20,6 @@ Kill kanif process
 
 Get dstat log
   [Arguments]   ${outdir}=output/test
-  Run Process   kaget -f kanif.conf -l clex dstat.log ${outdir}
+  Run Process   kaget -f kanif.conf -l clex -F dstat.log ${outdir}
   ...           shell=True  cwd=../monitor
 

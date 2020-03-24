@@ -18,14 +18,14 @@ Pre Process
 
 Create and Start Servers
   Given Api service is available
-  When User creates server        ${PRIVATE_NETWORK}
+  When User creates server
   Then Server has been created
        and Server is active
 
 Post Process
   ${sleep} =    Convert To Integer  ${NUM_SERVERS}
-  Log       ${sleep * 3}s     console=True
-  Sleep     ${sleep * 3}s     Collecting resource usage
+  Log       ${sleep * 1}s     console=True
+  Sleep     ${sleep * 1}s     Collecting resource usage
   [Teardown]    Stop Monitor    ${handle}
 
 *** Keywords ***
