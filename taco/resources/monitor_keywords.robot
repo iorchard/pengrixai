@@ -7,7 +7,7 @@ Clean dstat log
 Start kanif process
   [Arguments]   ${conf}=kanif.conf
   ${handle} =   Start Process
-  ...   kash -f ${conf} -l clex -F -- "dstat -tlcmdn -o dstat.log"  shell=True
+  ...   kash -f ${conf} -l clex -F -- "dstat -tlcmdn --output dstat.log 10"  shell=True
   ...   cwd=../monitor
 
   ${pid} =  Get Process Id    ${handle}

@@ -1,0 +1,9 @@
+[IOTYPE-IODEPTH-BS-THREAD]
+ioengine=libaio
+invalidate=1
+filename=/dev/vdb
+rw=IOTYPE
+iodepth=IODEPTH
+bs=BS
+numjobs=THREAD
+thread
