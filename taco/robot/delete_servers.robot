@@ -21,12 +21,16 @@ Pre Process
   Set Suite Variable    ${handle}
 
 Delete Servers
+  [Tags]    delete
   Given Compute Service is available
   When User deletes server
   Then All servers are gone
 
-Post Process
+Clean ports
+  [Tags]    delete
   Clean the ports
+
+Post Process
   ${sleep} =    Convert To Integer  ${NUM_SERVERS}
   Log       ${sleep}s     console=True
   Sleep     ${sleep}s     Collecting resource usage
@@ -36,5 +40,5 @@ Post Process
 Stop Monitor
   [Arguments]    ${handle}
   Repeat Keyword    2 times     Kill kanif process  ${handle}
-  Get dstat log     output/delete-${NUM_SERVERS}-vms
+  Get dstat log     ${OUTPUT DIR}
 

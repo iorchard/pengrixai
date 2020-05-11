@@ -1,0 +1,6 @@
+cluster stage_ceph {
+    stage-control-01
+    stage-control-0[2-3]
+    stage-compute-0[2-4]
+    stage-ceph-0[1-4]
+}

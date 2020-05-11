@@ -19,26 +19,62 @@ def sum_fio_data(iotype, iodepth, bs, num_procs, json_dir, sort_field):
         for job in data['jobs']:
             # get jobname
             s_jobname = job['jobname']
-            if "write" in iotype:
-                s_type = 'write'
-            elif "read" in iotype:
-                s_type = 'read'
-            bw = job[s_type]['bw']
-            iops = int(job[s_type]['iops'])
-            lat_us_min = int(job[s_type]['lat_ns']['min']/1000)
-            lat_us_max = int(job[s_type]['lat_ns']['max']/1000)
-            lat_us_mean = int(job[s_type]['lat_ns']['mean']/1000)
-
-            d.append({
-                'nodename': s_nodename,
-                'jobname': s_jobname,
-                'iotype': iotype,
-                'bw': bw,
-                'iops': iops,
-                'lat_min': lat_us_min,
-                'lat_max': lat_us_max,
-                'lat_mean': lat_us_mean
-            })
+            if iotype == 'randrw':
+                bw_read = job['read']['bw']
+                bw_write = job['write']['bw']
+                bw = bw_read + bw_write
+                iops_read = job['read']['iops']
+                iops_write = job['write']['iops']
+                iops = iops_read + iops_write
+                lat_us_min_read = int(job['read']['lat_ns']['min']/1000)
+                lat_us_min_write = int(job['write']['lat_ns']['min']/1000)
+                lat_us_min = lat_us_min_read + lat_us_min_write
+                lat_us_max_read = int(job['read']['lat_ns']['max']/1000)
+                lat_us_max_write = int(job['write']['lat_ns']['max']/1000)
+                lat_us_max = lat_us_max_read + lat_us_max_write
+                lat_us_mean_read = int(job['read']['lat_ns']['mean']/1000)
+                lat_us_mean_write = int(job['write']['lat_ns']['mean']/1000)
+                lat_us_mean = lat_us_mean_read + lat_us_mean_write
+                d.append({
+                    'nodename': s_nodename,
+                    'jobname': s_jobname,
+                    'iotype': iotype,
+                    'bw': bw,
+                    'bw_read': bw_read,
+                    'bw_write': bw_write,
+                    'iops': iops,
+                    'iops_read': iops_read,
+                    'iops_write': iops_write,
+                    'lat_min': lat_us_min,
+                    'lat_min_read': lat_us_min_read,
+                    'lat_min_write': lat_us_min_write,
+                    'lat_max': lat_us_max,
+                    'lat_max_read': lat_us_max_read,
+                    'lat_max_write': lat_us_max_write,
+                    'lat_mean': lat_us_mean,
+                    'lat_mean_read': lat_us_mean_read,
+                    'lat_mean_write': lat_us_mean_write
+                })
+            else:
+                if "write" in iotype:
+                    s_type = 'write'
+                elif "read" in iotype:
+                    s_type = 'read'
+                bw = job[s_type]['bw']
+                iops = int(job[s_type]['iops'])
+                lat_us_min = int(job[s_type]['lat_ns']['min']/1000)
+                lat_us_max = int(job[s_type]['lat_ns']['max']/1000)
+                lat_us_mean = int(job[s_type]['lat_ns']['mean']/1000)
+                d.append({
+                    'nodename': s_nodename,
+                    'jobname': s_jobname,
+                    'iotype': iotype,
+                    'bw': bw,
+                    'iops': iops,
+                    'lat_min': lat_us_min,
+                    'lat_max': lat_us_max,
+                    'lat_mean': lat_us_mean
+                })
 
     d = sorted(d, key=lambda k: int(k[sort_field]), reverse=True)
     # output to json_dir/preliminaries.txt
@@ -69,7 +105,7 @@ def sum_fio_data(iotype, iodepth, bs, num_procs, json_dir, sort_field):
     return [sum_iops, sum_bw, avg_lat_mean, max_lat_max, min_lat_min]
 
 if __name__ == '__main__':
-    l = sum_fio_data('randwrite', 32, '4k', 1,
-            'output/psnm/ceph-randwrite', 'iops')
+    l = sum_fio_data('randrw', 32, '4k', 1,
+            'output/stage/ceph-randrw', 'iops')
 
     print(l)

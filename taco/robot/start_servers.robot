@@ -35,5 +35,5 @@ Post Process
 Stop Monitor
   [Arguments]    ${handle}
   Repeat Keyword    2 times     Kill kanif process  ${handle}
-  Get dstat log     output/start-${NUM_SERVERS}-vms
+  Get dstat log     ${OUTPUT DIR}
 

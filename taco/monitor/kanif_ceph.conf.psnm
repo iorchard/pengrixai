@@ -1,4 +1,5 @@
-cluster stage {
+cluster psnm_ceph {
     pengrixai-0
+    compute-0[06-10]
     ceph-00[1-5]
 }

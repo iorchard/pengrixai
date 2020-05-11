@@ -19,40 +19,34 @@ Pre Process
   ${handle} =       Start kanif process     kanif_ceph.conf
   Set Suite Variable    ${handle}
 
-Test
-  [Tags]    test
-  [Template]    Test argument
-  # iotype  iodepth         bs      num_procs   sort_field  clients
-  randread      1           4k      1           iops        ${CEPH_CLIENTS}
-
-Run Randread IOPS In Preliminaries
+Run RandRW IOPS In Preliminaries
   [Tags]    preliminaries
   [Template]    Run fio in parallel
   # iotype  iodepth         bs      num_procs   sort_field  clients
-  randread      1           4k      1           iops        ${CEPH_CLIENTS}[0]
-  randread      8           4k      1           iops        ${CEPH_CLIENTS}[0]
-  randread      16          4k      1           iops        ${CEPH_CLIENTS}[0]
-  randread      32          4k      1           iops        ${CEPH_CLIENTS}[0]
-  randread      64          4k      1           iops        ${CEPH_CLIENTS}[0]
-  randread     128          4k      1           iops        ${CEPH_CLIENTS}[0]
+  randrw        1           4k      1           iops        ${CEPH_CLIENTS}[0]
+  randrw        8           4k      1           iops        ${CEPH_CLIENTS}[0]
+  randrw        16          4k      1           iops        ${CEPH_CLIENTS}[0]
+  randrw        32          4k      1           iops        ${CEPH_CLIENTS}[0]
+  randrw        64          4k      1           iops        ${CEPH_CLIENTS}[0]
+  randrw       128          4k      1           iops        ${CEPH_CLIENTS}[0]
 
-Who is the top Randread IOPS performer
+Who is the top RandRW IOPS performer
   [Tags]         top
   ${iodepth}  ${bs} =   Get top performer
-  ...   randread    ${CEPH_CLIENTS}[0]  ${JSON_DIR}   iops
-  Log   randread-${iodepth}-${bs} wins!!!     console=True
+  ...   randrw    ${CEPH_CLIENTS}[0]  ${JSON_DIR}   iops
+  Log   randrw-${iodepth}-${bs} wins!!!     console=True
   Set Suite Variable    ${iodepth}
   Set Suite Variable    ${bs}
 
-Run Randread IOPS In Finals
+Run RandRW IOPS In Finals
   [Tags]    finals
   [Template]    Run fio in parallel
   # iotype  iodepth          bs      num_procs  sort_field  clients
-  randread     ${iodepth}    ${bs}    1         iops        @{CEPH_CLIENTS}
-  randread     ${iodepth}    ${bs}    2         iops        @{CEPH_CLIENTS}
-  randread     ${iodepth}    ${bs}    3         iops        @{CEPH_CLIENTS}
-  randread     ${iodepth}    ${bs}    4         iops        @{CEPH_CLIENTS}
-  randread     ${iodepth}    ${bs}    5         iops        @{CEPH_CLIENTS}
+  randrw       ${iodepth}    ${bs}    1         iops        @{CEPH_CLIENTS}
+  randrw       ${iodepth}    ${bs}    2         iops        @{CEPH_CLIENTS}
+  randrw       ${iodepth}    ${bs}    3         iops        @{CEPH_CLIENTS}
+  randrw       ${iodepth}    ${bs}    4         iops        @{CEPH_CLIENTS}
+  randrw       ${iodepth}    ${bs}    5         iops        @{CEPH_CLIENTS}
 
 Post Process
   [Tags]     post

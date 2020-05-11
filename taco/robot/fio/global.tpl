@@ -1,6 +1,10 @@
 [global]
-ramp_time=30
-runtime=120
+ramp_time=RAMP_TIME
+runtime=RUNTIME
 time_based
 direct=1
+;invalidate=0
 group_reporting
+;latency_target=LATENCY_TARGET
+;latency_window=LATENCY_WINDOW
+;latency_percentile=LATENCY_PERCENTILE

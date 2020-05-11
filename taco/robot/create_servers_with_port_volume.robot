@@ -21,7 +21,8 @@ Pre Process
   ${handle} =       Start kanif process
   Set Suite Variable    ${handle}
 
-Create and Start Servers 
+Create and Start Servers
+  [Tags]    create
   Given Compute service is available
   When User creates server with port and volume
   #Then Server is active
@@ -37,5 +38,5 @@ Post Process
 Stop Monitor
   [Arguments]    ${handle}
   Repeat Keyword    2 times     Kill kanif process  ${handle}
-  Get dstat log     output/create-n-start-${NUM_SERVERS}-vms
+  Get dstat log     ${OUTPUT DIR}
 

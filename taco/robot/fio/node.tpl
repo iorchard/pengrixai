@@ -1,5 +1,6 @@
-[IOTYPE-IODEPTH-BS-NUM_PROCS]
+[IOTYPE-IODEPTH-BS-NUM_PROCS-NO]
 ioengine=rbd
+;clustername=ceph
 clientname=admin
 pool=rbdbench
 rbdname=image-NO
