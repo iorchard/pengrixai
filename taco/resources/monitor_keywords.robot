@@ -6,6 +6,10 @@ Clean dstat log
 
 Start kanif process
   [Arguments]   ${conf}=kanif.conf
+  # Check if dstat is installed. If not, try to install it.
+  ${rc} =       Run and Return Rc   which dstat
+  Run Keyword If    ${rc} != 0
+  ...   Run     kash -f ${conf} -l clex -F -- "sudo yum install -y dstat"
   ${handle} =   Start Process
   ...   kash -f ${conf} -l clex -F -- "dstat -tlcmdrn --output dstat.log 10"  shell=True
   ...   cwd=../monitor

@@ -3,9 +3,8 @@ Library             SSHLibrary
 
 *** Variables ***
 # ceph disk io test variables
-@{CEPH_CLIENTS}         stage-compute-02
-...                     stage-compute-03    stage-compute-04
-...                     stage-control-02    stage-control-03
+@{CEPH_CLIENTS}         taco2-vpc-001
+...                     taco2-adm-001
 ${CEPH_CLIENT_TYPE}     node
 ${CEPH_CLIENT_SSHPORT}   22
 ${UID}                  clex
@@ -19,8 +18,6 @@ ${RAMP_TIME}            300
 ${RUNTIME}              600
 ${RWMIXREAD}            20
 ${RWMIXWRITE}           80
-${iodepth}              32
-${bs}                   4k
 
 *** Keywords ***
 Clean fio files
@@ -38,9 +35,13 @@ Verify ceph client
     ...       SSHLibrary.Execute Command   ceph --version   return_stdout=False
     ...           return_rc=True
     Run Keyword If    ${rc} is not None  Should Be Equal As Integers  ${rc}  0
+
     ${rc} =   SSHLibrary.Execute Command   fio --version   return_stdout=False
     ...           return_rc=True
-    Should Be Equal As Integers   ${rc}   0
+    Run Keyword If      ${rc} != 0
+    ...     SSHLibrary.Execute Command  sudo yum install -y fio
+    ...     return_stdout=False
+    #Should Be Equal As Integers   ${rc}   0
   END
 
   ${rc} =   Run And Return Rc   ls -ld ${JSON_DIR}

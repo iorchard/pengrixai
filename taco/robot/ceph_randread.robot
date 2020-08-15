@@ -19,12 +19,6 @@ Pre Process
   ${handle} =       Start kanif process     kanif_ceph.conf
   Set Suite Variable    ${handle}
 
-Test
-  [Tags]    test
-  [Template]    Test argument
-  # iotype  iodepth         bs      num_procs   sort_field  clients
-  randread      1           4k      1           iops        ${CEPH_CLIENTS}
-
 Run Randread IOPS In Preliminaries
   [Tags]    preliminaries
   [Template]    Run fio in parallel
