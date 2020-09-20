@@ -83,22 +83,13 @@ def top_performer(iotype, where, json_dir, field):
     # output to json_dir/preliminaries.txt
     with open(json_dir + '/' + iotype + '_preliminaries.txt', 'w') as f:
         f.write("{:^20}{:>8}{:>12}{:>14}{:>14}{:>14}\n"\
-                .format("NAME", "IOPS", "BW(kB/s)", "min_lat(us)",
-                "max_lat(us)", "mean_lat(us)"))
+                .format("NAME", "IOPS", "BW(kB/s)", "mean_lat(us)",
+                "max_lat(us)", "min_lat(us)"))
         for job in d:
             f.write("{:<20}{:>8,}{:>12,}{:>14,}{:>14,}{:>14,}\n"\
                     .format(job['jobname'], job['iops'], job['bw'],
-                        job['lat_min'], job['lat_max'], job['lat_mean']))
+                        job['lat_mean'], job['lat_max'], job['lat_min']))
 
-#    print("{:^20}{:>8}{:>12}{:>14}{:>14}{:>14}{:>14}\n"\
-#            .format("NAME", "IOPS", "BW(kB/s)", "min_lat(us)",
-#            "max_lat(us)", "mean_lat(us)", "99percentile(us)"))
-#    for job in d:
-#        print("{:<20}{:>8,}{:>12,}{:>14,}{:>14,}{:>14,}{:>14,}\n"\
-#                .format(job['jobname'], job['iops'], job['bw'],
-#                    job['lat_min'], job['lat_max'], job['lat_mean'],
-#                    job['lat_99pct']))
-    
     # <iotype>-<iodepth>-<bs>-<thread> e.g. read-128-4m-1
     m = re.match(r'\w+-(\d+)-(\w+)-\d+', d[0]['jobname'])
     return [m.group(1), m.group(2)]
