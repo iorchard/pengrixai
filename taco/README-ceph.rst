@@ -36,7 +36,7 @@ Create rbdbench pool.::
 
    (Ceph client)$ sudo ceph osd pool create rbdbench 128
 
-Create <n> rbd images.(<n> is CEPH_CLIENTS * max_jobs(5))::
+Create <n> rbd images.(<n> is (CEPH_CLIENTS * max_jobs(5))-1)::
 
    (Ceph client)$ for i in {0..<n>}
    do
