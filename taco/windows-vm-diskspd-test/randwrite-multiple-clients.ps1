@@ -1,4 +1,4 @@
-2..7 | ForEach-Object {
+﻿2..7 | ForEach-Object {
     $i = "$_"
     Write-Output "$i outer loop"
     1..$i | ForEach-Object {

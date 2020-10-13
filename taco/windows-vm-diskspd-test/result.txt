@@ -1,0 +1,115 @@
+[windows-test-1 vm on ceph]
+virt_type: qemu
+<8 threads/file, io depth: 1-12, amplication factor: 3>
+PS C:\Users\IBK\diskspd> .\randwrite.ps1
+Param -o1, 2334.66 iops, 9.12 MB/s, 3.380 ms, 62.65% CPU
+Param -o2, 2502.72 iops, 9.78 MB/s, 6.166 ms, 60.05% CPU
+Param -o3, 2616.52 iops, 10.22 MB/s, 8.955 ms, 63.09% CPU
+Param -o4, 2606.77 iops, 10.18 MB/s, 12.016 ms, 62.62% CPU
+Param -o5, 2965.76 iops, 11.58 MB/s, 13.274 ms, 63.46% CPU
+Param -o6, 2560.17 iops, 10.00 MB/s, 18.511 ms, 67.63% CPU
+Param -o7, 2650.11 iops, 10.35 MB/s, 20.945 ms, 66.58% CPU
+Param -o8, 2752.71 iops, 10.75 MB/s, 23.063 ms, 66.57% CPU
+Param -o9, 2970.80 iops, 11.60 MB/s, 24.107 ms, 65.81% CPU
+Param -o10, 2989.79 iops, 11.68 MB/s, 26.598 ms, 66.99% CPU
+Param -o11, 2726.47 iops, 10.65 MB/s, 32.014 ms, 69.52% CPU
+Param -o12, 2722.93 iops, 10.64 MB/s, 35.061 ms, 68.15% CPU
+
+virt_type: kvm
+<8 threads/file, io depth: 1-12, amplication factor: 3>
+PS C:\Users\IBK\diskspd> .\randwrite.ps1
+Param -o1, 20171.58 iops, 78.80 MB/s, 0.396 ms, 15.58% CPU
+Param -o2, 21293.69 iops, 83.18 MB/s, 0.750 ms, 14.67% CPU
+Param -o3, 20084.72 iops, 78.46 MB/s, 1.194 ms, 13.76% CPU
+Param -o4, 20649.82 iops, 80.66 MB/s, 1.548 ms, 13.49% CPU
+Param -o5, 20983.61 iops, 81.97 MB/s, 1.905 ms, 13.27% CPU
+Param -o6, 20053.57 iops, 78.33 MB/s, 2.392 ms, 12.71% CPU
+Param -o7, 20021.31 iops, 78.21 MB/s, 2.795 ms, 13.34% CPU
+Param -o8, 20253.61 iops, 79.12 MB/s, 3.158 ms, 14.38% CPU
+Param -o9, 20208.94 iops, 78.94 MB/s, 3.561 ms, 11.88% CPU
+Param -o10, 22117.53 iops, 86.40 MB/s, 3.615 ms, 14.19% CPU
+Param -o11, 20038.56 iops, 78.28 MB/s, 4.389 ms, 13.51% CPU
+Param -o12, 20068.18 iops, 78.39 MB/s, 4.781 ms, 13.46% CPU
+
+<8 threads/file, io depth: 10, amplication factor: 3>
+2 Clients
+Param , 10046.02 iops, 39.24 MB/s, 7.958 ms, 9.38% CPU
+Param , 9986.19 iops, 39.01 MB/s, 8.006 ms, 9.38% CPU
+3 Clients
+Param , 6722.19 iops, 26.26 MB/s, 11.898 ms, 9.45% CPU
+Param , 6706.48 iops, 26.20 MB/s, 11.925 ms, 9.45% CPU
+Param , 6692.12 iops, 26.14 MB/s, 11.949 ms, 9.47% CPU
+4 Clients
+Param , 5003.85 iops, 19.55 MB/s, 15.984 ms, 9.55% CPU
+Param , 4982.83 iops, 19.46 MB/s, 16.051 ms, 9.55% CPU
+Param , 4998.20 iops, 19.52 MB/s, 16.002 ms, 9.56% CPU
+Param , 4994.31 iops, 19.51 MB/s, 16.013 ms, 9.57% CPU
+5 Clients
+Param , 4088.22 iops, 15.97 MB/s, 19.565 ms, 9.53% CPU
+Param , 4080.43 iops, 15.94 MB/s, 19.602 ms, 9.53% CPU
+Param , 4078.19 iops, 15.93 MB/s, 19.612 ms, 9.55% CPU
+Param , 4076.31 iops, 15.92 MB/s, 19.619 ms, 9.57% CPU
+Param , 4159.19 iops, 16.25 MB/s, 19.180 ms, 10.08% CPU
+6 Clients
+Param , 3352.24 iops, 13.09 MB/s, 23.861 ms, 9.53% CPU
+Param , 3358.00 iops, 13.12 MB/s, 23.820 ms, 9.53% CPU
+Param , 3357.20 iops, 13.11 MB/s, 23.824 ms, 9.54% CPU
+Param , 3387.08 iops, 13.23 MB/s, 23.571 ms, 9.74% CPU
+Param , 3384.97 iops, 13.22 MB/s, 23.586 ms, 9.74% CPU
+Param , 3390.74 iops, 13.25 MB/s, 23.550 ms, 9.76% CPU
+7 Clients
+Param , 2803.36 iops, 10.95 MB/s, 28.526 ms, 9.56% CPU
+Param , 2803.16 iops, 10.95 MB/s, 28.535 ms, 9.56% CPU
+Param , 2804.18 iops, 10.95 MB/s, 28.501 ms, 9.72% CPU
+Param , 2809.87 iops, 10.98 MB/s, 28.443 ms, 9.72% CPU
+Param , 2811.38 iops, 10.98 MB/s, 28.418 ms, 9.75% CPU
+Param , 2828.54 iops, 11.05 MB/s, 28.219 ms, 10.05% CPU
+Param , 2826.29 iops, 11.04 MB/s, 28.242 ms, 10.05% CPU
+
+randread
+<8 threads/file, io depth: 1-12, amplication factor: 3>
+PS C:\Users\IBK\diskspd> C:\Users\IBK\Desktop\randread.ps1
+Param -o1, 20035.50 iops, 78.26 MB/s, 0.399 ms, 13.52% CPU
+Param -o2, 24024.52 iops, 93.85 MB/s, 0.665 ms, 19.17% CPU
+Param -o3, 23444.85 iops, 91.58 MB/s, 1.023 ms, 18.08% CPU
+Param -o4, 23480.48 iops, 91.72 MB/s, 1.362 ms, 17.35% CPU
+Param -o5, 23479.73 iops, 91.72 MB/s, 1.703 ms, 18.14% CPU
+Param -o6, 23852.95 iops, 93.18 MB/s, 2.011 ms, 17.69% CPU
+Param -o7, 23671.62 iops, 92.47 MB/s, 2.365 ms, 17.73% CPU
+Param -o8, 23682.21 iops, 92.51 MB/s, 2.702 ms, 17.80% CPU
+Param -o9, 24240.34 iops, 94.69 MB/s, 2.969 ms, 17.58% CPU
+Param -o10, 24114.56 iops, 94.20 MB/s, 3.316 ms, 17.93% CPU
+Param -o11, 23668.43 iops, 92.45 MB/s, 3.717 ms, 17.81% CPU
+Param -o12, 24295.08 iops, 94.90 MB/s, 3.950 ms, 18.09% CPU
+
+randwrite
+<variable threads/iodepth>
+PS C:\Users\IBK\diskspd> C:\Users\IBK\Desktop\randwrite-t-o.ps1
+Param -t1 -o240 : 20852.33 iops, 81.45 MB/s, 11.509 ms, 6.15% CPU
+Param -t2 -o120 : 20375.09 iops, 79.59 MB/s, 11.778 ms, 7.30% CPU
+Param -t3 -o80 : 20853.31 iops, 81.46 MB/s, 11.508 ms, 8.97% CPU
+Param -t4 -o60 : 20617.22 iops, 80.54 MB/s, 11.639 ms, 9.12% CPU
+Param -t5 -o48 : 20666.74 iops, 80.73 MB/s, 11.611 ms, 8.79% CPU
+Param -t6 -o40 : 21176.11 iops, 82.72 MB/s, 11.332 ms, 9.21% CPU
+Param -t8 -o30 : 21529.77 iops, 84.10 MB/s, 11.146 ms, 8.96% CPU
+Param -t10 -o24 : 21136.25 iops, 82.56 MB/s, 11.354 ms, 8.80% CPU
+Param -t12 -o20 : 21639.59 iops, 84.53 MB/s, 11.089 ms, 9.00% CPU
+Param -t15 -o16 : 20897.17 iops, 81.63 MB/s, 11.483 ms, 8.92% CPU
+Param -t16 -o15 : 20391.65 iops, 79.65 MB/s, 11.767 ms, 9.10% CPU
+Param -t20 -o12 : 20466.73 iops, 79.95 MB/s, 11.723 ms, 9.20% CPU
+
+[win10-on-nfs vm on netapp nfs]
+random write 8 threads
+PS C:\Users\IBK> C:\Users\IBK\diskspd\randwrite.ps1
+Param -o1, 13236.94 iops, 51.71 MB/s, 0.604 ms, 9.13% CPU
+Param -o2, 23734.77 iops, 92.71 MB/s, 0.674 ms, 16.37% CPU
+Param -o3, 29518.17 iops, 115.31 MB/s, 0.812 ms, 21.19% CPU
+Param -o4, 32088.76 iops, 125.35 MB/s, 0.997 ms, 22.31% CPU
+Param -o5, 33175.39 iops, 129.59 MB/s, 1.205 ms, 22.25% CPU
+Param -o6, 33881.56 iops, 132.35 MB/s, 1.416 ms, 22.82% CPU
+Param -o7, 34198.57 iops, 133.59 MB/s, 1.637 ms, 22.54% CPU
+Param -o8, 34641.82 iops, 135.32 MB/s, 1.847 ms, 22.52% CPU
+Param -o9, 34778.44 iops, 135.85 MB/s, 2.070 ms, 22.01% CPU
+Param -o10, 35001.62 iops, 136.73 MB/s, 2.285 ms, 21.94% CPU
+Param -o11, 34767.06 iops, 135.81 MB/s, 2.530 ms, 21.94% CPU
+Param -o12, 34792.96 iops, 135.91 MB/s, 2.758 ms, 22.10% CPU
