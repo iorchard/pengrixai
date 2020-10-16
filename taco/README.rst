@@ -1,7 +1,7 @@
 PengrixAI
 =========
 
-It's the RPA project for system testint and management.
+It's the RPA project for system testing and management.
 It's based on RobotFramework.
 
 Pre-requisite
