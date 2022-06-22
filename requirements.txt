@@ -15,7 +15,7 @@ kiwisolver==1.1.0
 linecache2==1.0.0
 matplotlib==3.1.2
 more-itertools==8.1.0
-numpy==1.18.1
+numpy==1.22.0
 packaging==20.0
 paramiko==2.7.1
 pbr==5.4.4
